@@ -45,18 +45,22 @@ player = Player("Player", room["outside"])
 # Write a loop that:
 while True:
 
-# * Prints the current room name
-# * Prints the current description (the textwrap module might be useful here).
+    # * Prints the current room name
+    # * Prints the current description (the textwrap module might be useful here).
     print(f"\n=== {player.current_room.name} ===\n\n{player.current_room.description}\n")
-# * Waits for user input and decides what to do.
+    # * Waits for user input and decides what to do.
     user_input = input("Enter a command: ")
 
-# If the user enters a cardinal direction, attempt to move to the room there.
-# Print an error message if the movement isn't allowed.
+    # If the user enters a cardinal direction, attempt to move to the room there.
+    # Print an error message if the movement isn't allowed.
     if user_input == "n":
-        player.move(room[player.current_room.n_to.name.lower()])
+        player.move(player.current_room.n_to)
 
-# If the user enters "q", quit the game.
+    # If the user enters "q", quit the game.
     elif user_input == "q":
-        print("Goodbye, play agian soon!")
+        print("Goodbye, play again soon!")
         break
+    
+    # If no recognized command is entered tell the user it was not recognized
+    else:
+        print("\nI don't understand. Please enter a valid command!\n")
