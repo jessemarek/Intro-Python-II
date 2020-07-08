@@ -11,5 +11,5 @@ class Player:
         self.current_room = current_room
 
     # moves player to a new room
-    def move(new_room):
+    def move(self, new_room):
         self.current_room = new_room

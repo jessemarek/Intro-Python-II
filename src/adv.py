@@ -48,13 +48,44 @@ while True:
     # * Prints the current room name
     # * Prints the current description (the textwrap module might be useful here).
     print(f"\n=== {player.current_room.name} ===\n\n{player.current_room.description}\n")
+
     # * Waits for user input and decides what to do.
     user_input = input("Enter a command: ")
 
     # If the user enters a cardinal direction, attempt to move to the room there.
     # Print an error message if the movement isn't allowed.
+
+    # Move North
     if user_input == "n":
-        player.move(player.current_room.n_to)
+        try:
+            player.move(player.current_room.n_to)
+        except AttributeError:
+            print("\nYou cannot pass that direction\n")
+            continue
+
+    # Move East
+    elif user_input == "e":
+        try:
+            player.move(player.current_room.e_to)
+        except AttributeError:
+            print("\nYou cannot pass that direction\n")
+            continue
+
+    # Move South
+    elif user_input == "s":
+        try:
+            player.move(player.current_room.s_to)
+        except AttributeError:
+            print("\nYou cannot pass that direction\n")
+            continue
+
+    # Move West
+    elif user_input == "w":
+        try:
+            player.move(player.current_room.w_to)
+        except AttributeError:
+            print("\nYou cannot pass that direction\n")
+            continue
 
     # If the user enters "q", quit the game.
     elif user_input == "q":
