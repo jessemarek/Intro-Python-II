@@ -1,4 +1,6 @@
+import sys
 from room import Room
+from player import Player
 
 # Declare all the rooms
 
@@ -38,14 +40,23 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
+player = Player("Player", room["outside"])
 
 # Write a loop that:
-#
+while True:
+
 # * Prints the current room name
 # * Prints the current description (the textwrap module might be useful here).
+    print(f"\n=== {player.current_room.name} ===\n\n{player.current_room.description}\n")
 # * Waits for user input and decides what to do.
-#
+    user_input = input("Enter a command: ")
+
 # If the user enters a cardinal direction, attempt to move to the room there.
 # Print an error message if the movement isn't allowed.
-#
+    if user_input == "n":
+        player.move(room[player.current_room.n_to.name.lower()])
+
 # If the user enters "q", quit the game.
+    elif user_input == "q":
+        print("Goodbye, play agian soon!")
+        break

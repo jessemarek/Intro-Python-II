@@ -7,10 +7,7 @@
 # Items may be either initially in the room or dropped by the player
 
 class Room:
-    def __inti__(self, name, description):
+    def __init__(self, name, description):
         self.name = name
         self.description = description
-        self.n_to = "none"
-        self.e_to = "none"
-        self.s_to = "none"
-        self.w_to = "none"
+

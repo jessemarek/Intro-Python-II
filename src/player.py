@@ -2,10 +2,14 @@
 # currently.
 
 # Player has a name and and current room
-# Player starts in the "outside" Room
+# Player needs a way to move
 # Player will need a list of items they can carry
 
 class Player:
-    def __init__(self, name, current_room="outside"):
+    def __init__(self, name, current_room):
         self.name = name
         self.current_room = current_room
+
+    # moves player to a new room
+    def move(new_room):
+        self.current_room = new_room
