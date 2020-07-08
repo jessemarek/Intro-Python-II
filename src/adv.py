@@ -1,4 +1,4 @@
-import sys
+import os
 from room import Room
 from player import Player
 
@@ -38,28 +38,34 @@ room['treasure'].s_to = room['narrow']
 #
 # Main
 #
-
+user_name = input("Welcome, Adventurer! Please enter your name: ")
+os.system("clear")
 # Make a new player object that is currently in the 'outside' room.
-player = Player("Player", room["outside"])
+player = Player(user_name, room["outside"])
 
 # Write a loop that:
 while True:
 
     # * Prints the current room name
-    # * Prints the current description (the textwrap module might be useful here).
-    print(f"\n=== {player.current_room.name} ===\n\n{player.current_room.description}\n")
+    # * Prints the current description
+    # (the textwrap module might be useful here).
+    print(f"\n=== {player.current_room.name} ===\n \
+    \n{player.current_room.description}\n")
 
     # * Waits for user input and decides what to do.
-    user_input = input("Enter a command: ")
+    user_input = input(f"{player.name}, enter a command: ")
 
-    # If the user enters a cardinal direction, attempt to move to the room there.
+    # If the user enters a cardinal direction,
+    # attempt to move to the room there.
     # Print an error message if the movement isn't allowed.
 
     # Move North
     if user_input == "n":
         try:
             player.move(player.current_room.n_to)
+            os.system("clear")
         except AttributeError:
+            os.system("clear")
             print("\nYou cannot pass that direction\n")
             continue
 
@@ -67,7 +73,9 @@ while True:
     elif user_input == "e":
         try:
             player.move(player.current_room.e_to)
+            os.system("clear")
         except AttributeError:
+            os.system("clear")
             print("\nYou cannot pass that direction\n")
             continue
 
@@ -75,7 +83,9 @@ while True:
     elif user_input == "s":
         try:
             player.move(player.current_room.s_to)
+            os.system("clear")
         except AttributeError:
+            os.system("clear")
             print("\nYou cannot pass that direction\n")
             continue
 
@@ -83,15 +93,19 @@ while True:
     elif user_input == "w":
         try:
             player.move(player.current_room.w_to)
+            os.system("clear")
         except AttributeError:
+            os.system("clear")
             print("\nYou cannot pass that direction\n")
             continue
 
     # If the user enters "q", quit the game.
     elif user_input == "q":
+        os.system("clear")
         print("Goodbye, play again soon!")
         break
-    
+
     # If no recognized command is entered tell the user it was not recognized
     else:
+        os.system("clear")
         print("\nI don't understand. Please enter a valid command!\n")
