@@ -38,6 +38,7 @@ room['treasure'].s_to = room['narrow']
 #
 # Main
 #
+os.system("clear")
 user_name = input("Welcome, Adventurer! Please enter your name: ")
 os.system("clear")
 # Make a new player object that is currently in the 'outside' room.
