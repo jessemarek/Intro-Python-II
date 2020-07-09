@@ -7,7 +7,10 @@
 # Items may be either initially in the room or dropped by the player
 
 class Room:
-    def __init__(self, name, description):
+    def __init__(self, name, description, items=[]):
         self.name = name
         self.description = description
-        self.items = []
+        self.items = items
+
+    def __str__(self):
+        return f"\n=== {self.name} ===\n\n{self.description}\n"

@@ -36,43 +36,43 @@ room['narrow'].n_to = room['treasure']
 room['treasure'].s_to = room['narrow']
 
 
+# List of commands
+movement = ["n", "e", "s", "w", "north", "east", "south", "west"]
+
+
+# Function to start the game
+def game_start():
+    # clears the screen
+    os.system("clear")
+    # waits for user to enter name
+    global user_name
+    user_name = input("Welcome, Adventurer! Please enter your name: ")
+    os.system("clear")
+    return user_name
+
+
 # Function to parse user inputs
-# Takes user input and splits into list of commands
-# Checks commands entered and performs actions if valid
-# If the user enters a cardinal direction,
-# attempt to move to the room there.
-# Print an error message if the movement isn't allowed.
-def parse_input(user_input):
-    commands = user_input.split(" ")
+def parse_input():
+    # Takes user input and splits into list of commands
+    command = input(
+        f"{player.name}, enter a command: ").strip().lower().split()[0]
 
-    # Move North
-    if commands[0] == "n":
-        os.system("clear")
-        player.move("n_to")
+    # Checks commands entered and performs actions if valid
+    # If the user enters a direction, attempt to move to the room there.
 
-    # Move East
-    elif commands[0] == "e":
+    # Move in direction entered
+    if command in movement:
         os.system("clear")
-        player.move("e_to")
-
-    # Move South
-    elif commands[0] == "s":
-        os.system("clear")
-        player.move("s_to")
-
-    # Move West
-    elif commands[0] == "w":
-        os.system("clear")
-        player.move("w_to")
+        player.move(command)
 
     # If the user enters "q", quit the game.
-    elif commands[0] == "q":
+    elif command == "q" or "quit":
         quit_game()
 
     # If no recognized command is entered tell the user it was not recognized
     else:
         os.system("clear")
-        print("\nI don't understand. Please enter a valid command!\n")
+        print("I don't understand. Please enter a valid command!")
 
 
 # Function to print the game to screen
@@ -96,9 +96,7 @@ def quit_game():
 #
 # Main
 #
-os.system("clear")
-user_name = input("Welcome, Adventurer! Please enter your name: ")
-os.system("clear")
+game_start()
 # Make a new player object that is currently in the 'outside' room.
 player = Player(user_name, room["outside"])
 
@@ -107,12 +105,7 @@ while True:
 
     # * Prints the current room name
     # * Prints the current description
-    # (the textwrap module might be useful here).
-    print(f"\n=== {player.current_room.name} ===\n \
-    \n{player.current_room.description}\n")
-
-    # * Waits for user input and decides what to do.
-    user_input = input(f"{player.name}, enter a command: ")
+    print(player.location)
 
     # Run the command parser to decide what action to take
-    parse_input(user_input)
+    parse_input()
