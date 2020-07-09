@@ -65,3 +65,13 @@ class Player:
         # if there are no items prints `nothing interesting here`
         else:
             return "Nothing interesting here."
+
+    # prints list of all items in player's inventory
+    def check_inv(self):
+        items = []
+
+        if len(self.inventory) > 0:
+            for i in self.inventory:
+                items.append(i.name)
+
+        return f"Inventory: {items}"

@@ -3,26 +3,34 @@ from room import Room
 from player import Player
 from item import Item
 
+# declare all items
+
+item = {
+    "rock": Item("Rock", "an ordinary rock"),
+    "book": Item("Book", "a tattered journal of a previous adventurer"),
+    "coins": Item("Coins", "A small pile of gold coins")
+}
+
 # Declare all the rooms
 
 room = {
     'outside':  Room("Outside Cave Entrance",
                      "North of you, the cave mount beckons",
-                     [Item("Rock", "an ordinary rock"), ]),
+                     [item["rock"], ]),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east."""),
 
     'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
 into the darkness. Ahead to the north, a light flickers in
-the distance, but there is no way across the chasm."""),
+the distance, but there is no way across the chasm.""", [item["book"], ]),
 
     'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
 to north. The smell of gold permeates the air."""),
 
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
-earlier adventurers. The only exit is to the south."""),
+earlier adventurers. The only exit is to the south.""", [item["coins"], ]),
 }
 
 
@@ -45,6 +53,9 @@ movement = ["n", "e", "s", "w", "north", "east", "south", "west"]
 
 # commands for actions
 actions = ["get", "drop", "look"]
+
+# player commands
+player_commands = ["i", "inventory"]
 
 # prints a list of example commands
 game_help = ["h", "help", "?"]
@@ -98,6 +109,10 @@ def parse_input():
             game_message = getattr(player, command)(obj)
         else:
             game_message = getattr(player, command)()
+
+    elif command in player_commands:
+        os.system("clear")
+        game_message = player.check_inv()
 
     # If the user enters "q" or "quit" exit the game.
     elif command in exit_game:
