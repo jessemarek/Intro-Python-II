@@ -6,9 +6,14 @@ from item import Item
 # declare all items
 
 item = {
-    "rock": Item("Rock", "an ordinary rock"),
-    "book": Item("Book", "a tattered journal of a previous adventurer"),
-    "coins": Item("Coins", "A small pile of gold coins")
+    "rock": Item("Rock",
+                 "an ordinary rock"),
+
+    "book": Item("Book",
+                 "a tattered journal of a previous adventurer"),
+
+    "coins": Item("Coins",
+                  "A small pile of gold coins")
 }
 
 # Declare all the rooms
@@ -51,11 +56,11 @@ room['treasure'].s_to = room['narrow']
 # commands for movement
 movement = ["n", "e", "s", "w", "north", "east", "south", "west"]
 
-# commands for actions
-actions = ["get", "drop", "look"]
+# commands for player actions
+player_actions = ["get", "drop", "look"]
 
-# player commands
-player_commands = ["i", "inventory"]
+# backpack commands
+backpack = ["i", "inventory", "backpack"]
 
 # prints a list of example commands
 game_help = ["h", "help", "?"]
@@ -103,16 +108,23 @@ def parse_input():
         os.system("clear")
         player.move(command)
 
-    elif command in actions:
+    # If user enters an action command attempt to perform it
+    elif command in player_actions:
         os.system("clear")
         if obj:
             game_message = getattr(player, command)(obj)
         else:
             game_message = getattr(player, command)()
 
-    elif command in player_commands:
+    # If user wants to check inventory
+    elif command in backpack:
         os.system("clear")
         game_message = player.check_inv()
+
+    # prints a help list of some example commands and usage
+    elif command in game_help:
+        os.system("clear")
+        help_list()
 
     # If the user enters "q" or "quit" exit the game.
     elif command in exit_game:
@@ -124,10 +136,22 @@ def parse_input():
         game_message = "I don't understand. Please enter a valid command!"
 
 
+# Prints a help list to the screen for the user
+def help_list():
+    os.system("clear")
+    global game_message
+    game_message = "*** Game Help ***\n\n\
+Move your player by entering a direction.\n\
+Example: n, e, s, w or north, east, south, west.\n\n\
+You can enter verb commands to interact.\n\
+Example: get <item name> to pickup an item.\n"
+
 # Function to handle exiting the program
 # Clear the screen
 # Send goodbye message
 # Exit program with no errors
+
+
 def quit_game():
     os.system("clear")
     print("Goodbye, play again soon!")
