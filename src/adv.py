@@ -1,12 +1,14 @@
 import os
 from room import Room
 from player import Player
+from item import Item
 
 # Declare all the rooms
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons"),
+                     "North of you, the cave mount beckons",
+                     [Item("Rock", "an ordinary rock"), ]),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
 passages run north and east."""),
@@ -37,7 +39,18 @@ room['treasure'].s_to = room['narrow']
 
 
 # List of commands
+#
+# commands for movement
 movement = ["n", "e", "s", "w", "north", "east", "south", "west"]
+
+# commands for actions
+actions = ["get", "drop", "look"]
+
+# prints a list of example commands
+game_help = ["h", "help", "?"]
+
+# exits the program
+exit_game = ["q", "quit"]
 
 
 # Function to start the game
@@ -53,34 +66,47 @@ def game_start():
 
 # Function to parse user inputs
 def parse_input():
+    # Reset any previous game messages
+    global game_message
+    game_message = ""
+
     # Takes user input and splits into list of commands
-    command = input(
-        f"{player.name}, enter a command: ").strip().lower().split()[0]
+    user_input = input(
+        f"{player.name}, enter a command: ").strip().lower().split()
+
+    # action or command entered by player
+    # assume it is the first word entered
+    command = user_input[0]
+    obj = None
+
+    # object or item specific to certain actions
+    # example: get sword
+    # assume it is the second word entered by the user
+    if len(user_input) > 1:
+        obj = user_input[1]
 
     # Checks commands entered and performs actions if valid
+    #
     # If the user enters a direction, attempt to move to the room there.
-
-    # Move in direction entered
     if command in movement:
         os.system("clear")
         player.move(command)
 
-    # If the user enters "q", quit the game.
-    elif command == "q" or "quit":
+    elif command in actions:
+        os.system("clear")
+        if obj:
+            game_message = getattr(player, command)(obj)
+        else:
+            game_message = getattr(player, command)()
+
+    # If the user enters "q" or "quit" exit the game.
+    elif command in exit_game:
         quit_game()
 
     # If no recognized command is entered tell the user it was not recognized
     else:
         os.system("clear")
-        print("I don't understand. Please enter a valid command!")
-
-
-# Function to print the game to screen
-# Clears screen before printing each time
-# prints results of actions determined from user input
-""" def print_screen(message):
-    os.system("clear")
-    print(message) """
+        game_message = "I don't understand. Please enter a valid command!"
 
 
 # Function to handle exiting the program
@@ -100,12 +126,15 @@ game_start()
 # Make a new player object that is currently in the 'outside' room.
 player = Player(user_name, room["outside"])
 
+game_message = ""
+
 # Write a loop that:
 while True:
 
     # * Prints the current room name
     # * Prints the current description
     print(player.location)
+    print(f"{game_message}\n")
 
     # Run the command parser to decide what action to take
     parse_input()
