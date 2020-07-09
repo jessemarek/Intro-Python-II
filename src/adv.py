@@ -106,7 +106,10 @@ def parse_input():
     # If the user enters a direction, attempt to move to the room there.
     if command in movement:
         os.system("clear")
-        player.move(command)
+        try:
+            player.move(command)
+        except AttributeError:
+            game_message = "*** You cannot go that direction! ***"
 
     # If user enters an action command attempt to perform it
     elif command in player_actions:
@@ -133,7 +136,8 @@ def parse_input():
     # If no recognized command is entered tell the user it was not recognized
     else:
         os.system("clear")
-        game_message = "I don't understand. Please enter a valid command!"
+        game_message = "\
+*** I don't understand. Please enter a valid command! ***"
 
 
 # Prints a help list to the screen for the user
@@ -144,7 +148,7 @@ def help_list():
 Move your player by entering a direction.\n\
 Example: n, e, s, w or north, east, south, west.\n\n\
 You can enter verb commands to interact.\n\
-Example: get <item name> to pickup an item.\n"
+Example: 'get <item name>' to pickup an item.\n"
 
 # Function to handle exiting the program
 # Clear the screen
@@ -154,7 +158,7 @@ Example: get <item name> to pickup an item.\n"
 
 def quit_game():
     os.system("clear")
-    print("Goodbye, play again soon!")
+    print("=== Goodbye, play again soon! ===")
     exit(0)
 
 

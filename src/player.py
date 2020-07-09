@@ -19,9 +19,10 @@ class Player:
         if hasattr(self.location, attr):
             self.location = getattr(self.location, attr)
 
-        # Print an error message if the movement isn't allowed.
+        # Print an error message if the attribute doesn't exist
+        # movement isn't allowed.
         else:
-            print("You cannot go that direction!")
+            raise AttributeError
 
     # picks up items
     def get(self, item):
@@ -31,11 +32,11 @@ class Player:
                 # if the item is found pick it up
                 self.inventory.append(i)
                 self.location.items.remove(i)
-                return f"You picked up the {i.name}"
+                return f"*** You picked up the {i.name} ***"
 
         # if the item isn't found prints an error message
         else:
-            return f"There is no {item} here to pick up"
+            return f"*** There is no {item} here to pick up! ***"
 
     # drop items from inventory
     def drop(self, item):
@@ -45,11 +46,11 @@ class Player:
                 # if the item is found drop it in current room
                 self.location.items.append(i)
                 self.inventory.remove(i)
-                return f"You dropped the {i.name}"
+                return f"*** You dropped the {i.name} ***"
 
         # if the item isn't in player inventory prints an error message
         else:
-            return f"There is no {item} in your inventory"
+            return f"*** There is no {item} in your inventory! ***"
 
     # looks for items in a room
     def look(self):
@@ -60,11 +61,11 @@ class Player:
             for i in self.location.items:
                 items.append(i.name)
 
-            return f"The {self.location.name} contains {items}"
+            return f"*** The {self.location.name} contains {items} ***"
 
         # if there are no items prints `nothing interesting here`
         else:
-            return "Nothing interesting here."
+            return "*** Nothing interesting here. ***"
 
     # prints list of all items in player's inventory
     def check_inv(self):
@@ -74,4 +75,4 @@ class Player:
             for i in self.inventory:
                 items.append(i.name)
 
-        return f"Inventory: {items}"
+        return f"*** Inventory: {items} ***"
