@@ -12,5 +12,10 @@ class Player:
         self.inventory = []
 
     # moves player to a new room
-    def move(self, new_room):
-        self.current_room = new_room
+    # recieves a direction to check if move is possible
+    # if move is possible do it otherwise send error message
+    def move(self, direction):
+        if hasattr(self.current_room, direction):
+            self.current_room = getattr(self.current_room, direction)
+        else:
+            print("You cannot pass that direction!")
