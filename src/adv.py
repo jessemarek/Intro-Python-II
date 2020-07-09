@@ -72,12 +72,17 @@ exit_game = ["q", "quit"]
 # Function to start the game
 def game_start():
     # clears the screen
-    os.system("clear")
+    clear_screen()
     # waits for user to enter name
     global user_name
     user_name = input("Welcome, Adventurer! Please enter your name: ")
-    os.system("clear")
+    clear_screen()
     return user_name
+
+
+# Function to clear the terminal screen
+def clear_screen():
+    os.system("clear")
 
 
 # Function to parse user inputs
@@ -105,7 +110,7 @@ def parse_input():
     #
     # If the user enters a direction, attempt to move to the room there.
     if command in movement:
-        os.system("clear")
+        clear_screen()
         try:
             player.move(command)
         except AttributeError:
@@ -113,7 +118,7 @@ def parse_input():
 
     # If user enters an action command attempt to perform it
     elif command in player_actions:
-        os.system("clear")
+        clear_screen()
         if obj:
             game_message = getattr(player, command)(obj)
         else:
@@ -121,12 +126,12 @@ def parse_input():
 
     # If user wants to check inventory
     elif command in backpack:
-        os.system("clear")
+        clear_screen()
         game_message = player.check_inv()
 
     # prints a help list of some example commands and usage
     elif command in game_help:
-        os.system("clear")
+        clear_screen()
         help_list()
 
     # If the user enters "q" or "quit" exit the game.
@@ -135,14 +140,14 @@ def parse_input():
 
     # If no recognized command is entered tell the user it was not recognized
     else:
-        os.system("clear")
+        clear_screen()
         game_message = "\
 *** I don't understand. Please enter a valid command! ***"
 
 
 # Prints a help list to the screen for the user
 def help_list():
-    os.system("clear")
+    clear_screen()
     global game_message
     game_message = "*** Game Help ***\n\n\
 Move your player by entering a direction.\n\
@@ -157,7 +162,7 @@ Example: 'get <item name>' to pickup an item.\n"
 
 
 def quit_game():
-    os.system("clear")
+    clear_screen()
     print("=== Goodbye, play again soon! ===")
     exit(0)
 
